@@ -1,0 +1,2 @@
+defmodule ExCov do
+end
