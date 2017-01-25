@@ -48,17 +48,9 @@ defmodule ExCov.Project do
   """
   @spec compile_for_cover_analysis(Project.t) :: Project.t
   def compile_for_cover_analysis(p = %Project{ compile_path: compile_path }) do
-    modules =
-      Path.wildcard(Path.join(compile_path, "*.beam"))
-       |> Enum.map(fn(beam_file) ->
-            {:ok, compiled} =
-              Path.basename(beam_file, ".beam")
-               |> :erlang.binary_to_atom(:utf8)
-               |> :cover.compile_beam
-            Module.new(compiled)
-          end)
+    compile_path |> to_charlist |> :cover.compile_beam_directory
 
-    %{p | cover_compiled?: true, modules: modules }
+    %{p | cover_compiled?: true, modules: :cover.modules }
   end
 
   @doc """
