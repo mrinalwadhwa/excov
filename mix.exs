@@ -3,7 +3,7 @@ defmodule ExCov.Mixfile do
 
   def project do
     [app: :excov,
-     version: "0.1.2",
+     version: "0.1.3",
      description: description(),
      deps: deps(),
      package: package()]
