@@ -47,10 +47,13 @@ defmodule ExCov.Project do
   [`cover`](http://erlang.org/doc/man/cover.html) module.
   """
   @spec compile_for_cover_analysis(Project.t) :: Project.t
-  def compile_for_cover_analysis(p = %Project{ compile_path: compile_path }) do
-    compile_path |> to_charlist |> :cover.compile_beam_directory
+  def compile_for_cover_analysis(project = %Project{ compile_path: path }) do
+    path |> to_charlist |> :cover.compile_beam_directory
 
-    %{p | cover_compiled?: true, modules: :cover.modules }
+    %{project |
+        cover_compiled?: true,
+        modules: Enum.map(:cover.modules, &(Module.new(&1)))
+     }
   end
 
   @doc """
