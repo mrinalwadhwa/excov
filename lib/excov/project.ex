@@ -38,8 +38,8 @@ defmodule ExCov.Project do
   Return a new `ExCov.Project` struct
   """
   @spec new(binary) :: Project.t
-  def new(compile_path \\ Mix.Project.compile_path) do
-    %Project{ compile_path: compile_path }
+  def new(compile_path \\ nil) do
+    %Project{ compile_path: compile_path || Mix.Project.compile_path }
   end
 
   @doc """
