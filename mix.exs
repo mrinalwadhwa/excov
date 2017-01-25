@@ -4,7 +4,6 @@ defmodule ExCov.Mixfile do
   def project do
     [app: :excov,
      version: "0.0.0",
-     test_coverage: [tool: ExCov],
      description: description(),
      deps: deps(),
      package: package()]
@@ -12,13 +11,12 @@ defmodule ExCov.Mixfile do
 
   defp description do
     """
-    Simple Test Coverage Reports for Elixir Code
+    Code Coverage Reports for Elixir code.
     """
   end
 
   defp deps do
-    [{:ex_doc, "~> 0.14.5", only: :dev},
-     {:cmark, "~> 0.6.10", only: :dev}]
+    [{:ex_doc, "~> 0.14.5", only: :dev}]
   end
 
   defp package do
