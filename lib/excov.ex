@@ -23,14 +23,14 @@ defmodule ExCov do
   """
   @spec start(binary, Keyword.t) :: fun
   def start(compile_path, options \\ []) do
-    compile_path = Keyword.put(options, :compile_path, compile_path)
-    options = Keyword.merge(Application.get_all_env(:excov), options)
-
     # compile the project for cover analysis
     project = Project.new(compile_path) |> Project.compile_for_cover_analysis
 
     # return a function that mix will call later when tests are done running
     fn ->
+      # invocation options override application configuration
+      options = Keyword.merge(Application.get_all_env(:excov), options)
+
       # analyse the project
       analysed = Project.analyse(project)
 
@@ -52,13 +52,14 @@ defmodule ExCov do
   """
   @spec run(Keyword.t) :: :ok
   def run(options \\ []) do
-    options = Keyword.merge(Application.get_all_env(:excov), options)
-
     # compile the project for cover analysis
-    project = Project.new(options) |> Project.compile_for_cover_analysis
+    project = Project.new |> Project.compile_for_cover_analysis
 
     # run test task
     Mix.Task.run "test"
+
+    # invocation options override application configuration
+    options = Keyword.merge(Application.get_all_env(:excov), options)
 
     # analyse the project
     analysed = Project.analyse(project)
