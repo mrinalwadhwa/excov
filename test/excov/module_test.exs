@@ -144,19 +144,6 @@ defmodule ExCov.Module.Test do
     end
   end
 
-  describe "Module.call_counts/1" do
-    test "returns map with line no. as key &  number of calls as value" do
-      {:ok, Module} = :cover.compile_beam(Module)
-      assert 0 == Map.get(Module.call_counts(Module), 0)
-
-      # line zeros is
-      Module.source_path Module.Test
-      Module.source_path Module.Test
-      Module.source_path Module.Test
-      assert 5 == Map.get(Module.call_counts(Module), 0)
-    end
-  end
-
   describe "Module.source_path/1" do
     test "returns path of module" do
       path = Path.join([Project.root, "lib/excov/module.ex"])
