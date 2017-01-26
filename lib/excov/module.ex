@@ -75,12 +75,21 @@ defmodule ExCov.Module do
   def collect_statistics(lines) do
     relevant = Enum.count(lines, &(&1.relevant?))
     covered = Enum.count(lines, &(&1.covered?))
+
+    percentage_of_relevant_lines_covered =
+      if relevant == 0 do
+        100.0
+      else
+        covered/relevant * 100
+      end
+
     %Statistics{
       count_of_lines: length(lines),
       count_of_lines_relevant: relevant,
       count_of_lines_covered: covered,
       count_of_lines_missed: relevant - covered,
-      percentage_of_relevant_lines_covered: covered/relevant * 100
+      percentage_of_relevant_lines_covered:
+        percentage_of_relevant_lines_covered
     }
   end
 
