@@ -122,7 +122,7 @@ defmodule ExCov.Module do
   def lines(%Module{ source_path: source_path }) do
     source_path
      |> File.stream!
-     |> Stream.with_index
+     |> Stream.with_index(1)
      |> Enum.map(fn({c, i}) -> %Line{index: i, content: c} end)
   end
 
@@ -151,6 +151,7 @@ defmodule ExCov.Module do
           Map.update acc, line_no, [count], fn(counts) -> [count|counts] end
         end)
         |> Enum.reduce(%{}, fn({k,v}, a) -> Map.put(a, k, Enum.max(v)) end)
+        |> Map.drop([0])
     end
   end
 
